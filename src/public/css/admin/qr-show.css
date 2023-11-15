@@ -1,0 +1,21 @@
+h2 {
+    color: #007bff;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add some spacing between sections */
+p:last-child {
+    margin-bottom: 40px;
+}

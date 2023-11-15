@@ -1,0 +1,123 @@
+/* 詳細画面で使用 */
+
+.shop-detail-container {
+    display: flex;
+}
+
+.shop-detail-left {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.shop-detail-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+}
+
+.shop-detail-info {
+    margin-top: 20px;
+}
+
+.shop-detail-address {
+    font-weight: bold;
+}
+
+.shop-detail-genre {
+    color: #666;
+    /* ジャンルの色を指定 */
+}
+
+.shop-detail-right {
+    flex: 1;
+    /* 修正: 左側と同じ幅に設定 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #3498db;
+    /* 背景色を青色に設定 */
+    font-family: Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+}
+
+.shop-detail-description h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.shop-detail-description p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.reservation-container {
+    padding: 20px;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.selected-conditions {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.selected-conditions span {
+    color: #3498db;
+}
+
+button[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.alert.alert-danger {
+    background-color: #ff6b6b;
+    /* エラーメッセージの背景色 */
+    color: #fff;
+    /* エラーメッセージのテキストカラー */
+    border: 1px solid #e65050;
+    /* エラーメッセージのボーダー */
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+/* エラーメッセージ内のリストスタイルを設定 */
+.alert.alert-danger ul {
+    list-style-type: square;
+    margin-left: 20px;
+}
+
+/* エラーメッセージ内の各エラー項目をスタイル */
+.alert.alert-danger li {
+    font-weight: bold;
+    font-size: 14px;
+}

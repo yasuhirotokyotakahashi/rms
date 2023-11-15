@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -41,4 +41,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Shop::class, 'favorites', 'user_id', 'shop_id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_shop_role', 'user_id', 'role_id')->withTimestamps();
+    }
+
+    public function shops()
+    {
+        return $this->belongsToMany(Shop::class, 'user_shop_role', 'user_id', 'shop_id')
+            ->withPivot('role_id');
+    }
+
+
+
+
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

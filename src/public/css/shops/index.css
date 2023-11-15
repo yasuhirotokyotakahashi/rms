@@ -1,0 +1,90 @@
+/* 追加分 */
+
+
+.shop-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -20px;
+    /* カード要素の間隔を補うためにマージンを追加 */
+}
+
+.shop-item {
+    width: 300px;
+    margin: 0 20px 20px 0;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    width: 300px;
+    margin: 0 20px 20px 0;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card__img img {
+    width: 100%;
+    /* カードの幅に合わせる */
+    height: auto;
+    /* アスペクト比を維持 */
+    max-height: 200px;
+    /* 画像の最大高さを指定 */
+}
+
+
+.card__content {
+    flex-grow: 1;
+    /* コンテンツ部分を伸ばす */
+    padding: 15px 25px;
+}
+
+.card__content-ttl {
+    font-size: 18px;
+    margin-bottom: 10px;
+    /* 余白を減らす */
+    font-weight: 400;
+}
+
+.card__content-tag {
+    padding: 5px 10px;
+    background: #008888;
+    margin-bottom: 15px;
+    display: inline-block;
+    color: #fff;
+    font-size: 14px;
+}
+
+
+
+.card__content-tag-item {
+    display: inline-block;
+    color: #008888;
+}
+
+.card__content-description {
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.card__content-link {
+    display: block;
+    text-align: right;
+    color: #008888;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* 新しいスタイル */
+
+.heart-button {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: #ff0000;
+    /* ハートの色を赤に設定（任意の色に変更可能） */
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    /* ハートボタンと詳しく見るリンクの間にマージンを追加 */
+}
