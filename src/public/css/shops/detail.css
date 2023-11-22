@@ -80,8 +80,27 @@
 }
 
 .selected-conditions {
-    margin-top: 20px;
-    font-weight: bold;
+    .selected-conditions {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 20px;
+        /* フォントサイズをより大きく */
+        background-color: #3498db;
+        /* 背景色を追加 */
+        color: #fff;
+        /* テキストカラーを白に設定 */
+        padding: 15px;
+        /* パディングを追加して見た目を調整 */
+        border-radius: 8px;
+        /* 角丸に */
+        display: inline-block;
+        /* インラインブロック要素に変更 */
+    }
+
+    .selected-conditions span {
+        color: #ff0;
+        /* spanのテキストカラーを変更 */
+    }
 }
 
 .selected-conditions span {

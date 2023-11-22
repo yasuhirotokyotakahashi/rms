@@ -3,23 +3,6 @@
 @section('content')
     <h1>店舗検索結果</h1>
 
-    <!-- 検索フォーム -->
-    <form action="{{ route('shops.search') }}" method="GET">
-        <div class="form-group">
-            <label for="area">エリア:</label>
-            <input type="text" name="area" id="area" value="{{ request('area') }}">
-        </div>
-        <div class="form-group">
-            <label for="genre">ジャンル:</label>
-            <input type="text" name="genre" id="genre" value="{{ request('genre') }}">
-        </div>
-        <div class="form-group">
-            <label for="name">店名:</label>
-            <input type="text" name="name" id="name" value="{{ request('name') }}">
-        </div>
-        <button type="submit">検索</button>
-    </form>
-
     <div class="shop-list">
         @if ($results->isEmpty())
             <p>該当する店舗は見つかりませんでした。</p>

@@ -15,6 +15,6 @@
         </div>
     </div>
     @push('styles')
-        <link href="{{ asset('css/reservation/thanks.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/done.css') }}" rel="stylesheet">
     @endpush
 @endsection

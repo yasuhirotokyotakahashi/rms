@@ -9,9 +9,9 @@ use App\Models\User;
 use App\Models\UserShopRole;
 use Illuminate\Http\Request;
 
-class RoleUserController extends Controller
+class AdminController extends Controller
 {
-
+    //
     public function showAssignShopRoleForm()
     {
         // ユーザーと役割のデータを取得

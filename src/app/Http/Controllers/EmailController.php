@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class EmailTestController extends Controller
+class EmailController extends Controller
 {
     //
     public function sendNotification(Request $request)

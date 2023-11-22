@@ -19,24 +19,25 @@
             <div class="card-header">Stripe決済</div>
             <div class="card-body">
                 <form id="card-form" action="http://localhost/payment/store3" method="POST">
-                    <input type="hidden" name="_token" value="xhPMHpiujorpnEGM5hWPHyxK6hnAJxAWpxHWoG9k">
+                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <!-- カード番号 -->
                     <div class="form-group">
                         <label for="card_number">カード番号</label>
-                        <div id="card-number" class="form-control"></div>
+                        <div id="card-number" name="card_number" class="form-control"></div>
                     </div>
 
                     <!-- 有効期限 -->
                     <div class="form-group">
                         <label for="card_expiry">有効期限</label>
-                        <div id="card-expiry" class="form-control"></div>
+                        <div id="card-expiry" name="card_expiry" class="form-control"></div>
                     </div>
 
                     <!-- セキュリティコード -->
                     <div class="form-group">
                         <label for="card-cvc">セキュリティコード</label>
-                        <div id="card-cvc" class="form-control"></div>
+                        <div id="card-cvc" name="card_cvc" class="form-control"></div>
                     </div>
 
                     <div id="card-errors" class="text-danger"></div>
@@ -47,7 +48,6 @@
         </div>
     </div>
 </div>
-
 <script src="https://js.stripe.com/v3/"></script>
 <script>
     const stripe_public_key = "{{ config('services.stripe.stripe_public_key') }}";

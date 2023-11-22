@@ -16,8 +16,8 @@
     <header class="header">
         <div class="header__inner">
             <div class="header-utilities">
-                <a class="header__logo" href="/">Attendance Management</a>
-                @if (Request::path() === '/')
+                <a class="header__logo" href="/">Rese</a>
+                @if (Request::path() === '/' || Request::is('shops/search'))
                     <!-- 店舗一覧画面のパスに応じて条件分岐 -->
                     <form class="search-form" action="{{ route('shops.search') }}" method="POST">
                         @csrf

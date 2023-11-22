@@ -52,9 +52,6 @@ class ShopController extends Controller
             // 他のフォームフィールドのバリデーションルールを追加
         ]);
 
-
-
-
         // 画像アップロード処理
         if ($request->hasFile('image')) {
             // 画像を保存するディレクトリを指定

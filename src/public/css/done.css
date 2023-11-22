@@ -1,0 +1,33 @@
+.container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    /* 画面の高さいっぱいに表示 */
+}
+
+/* Style the card header */
+.card-header {
+    background-color: #007bff;
+    /* Blue color, you can change this */
+    color: #fff;
+    /* Text color, you can change this */
+}
+
+/* Add padding and adjust text size for card body */
+.card-body {
+    padding: 20px;
+}
+
+
+/* Change the text color of the primary button */
+.btn-primary:hover {
+    color: #fff;
+    /* Text color on hover, you can change this */
+}
+
+/* Optional: Add some margin to the top of the card */
+.card {
+    margin-top: 20px;
+}

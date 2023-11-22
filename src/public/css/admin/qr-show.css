@@ -1,21 +1,66 @@
-h2 {
-    color: #007bff;
+/* スマートフォン */
+@media screen and (max-width: 480px) {
+    h2 {
+        color: #007bff;
+        font-size: 18px;
+        /* 適切なサイズに調整してください */
+    }
+
+    p {
+        margin-bottom: 8px;
+        /* 適切なマージンに調整してください */
+    }
+
+    img {
+        margin-top: 16px;
+        /* 適切なマージンに調整してください */
+    }
+
+    p:last-child {
+        margin-bottom: 30px;
+        /* 適切なマージンに調整してください */
+    }
 }
 
-p {
-    margin-bottom: 10px;
+/* タブレット */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    h2 {
+        color: #007bff;
+        font-size: 24px;
+        /* 適切なサイズに調整してください */
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    img {
+        margin-top: 20px;
+    }
+
+    p:last-child {
+        margin-bottom: 40px;
+    }
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+/* PC */
+@media screen and (min-width: 769px) {
+    h2 {
+        color: #007bff;
+        font-size: 28px;
+        /* 適切なサイズに調整してください */
+    }
 
-/* Optional: Add some spacing between sections */
-p:last-child {
-    margin-bottom: 40px;
+    p {
+        margin-bottom: 12px;
+        /* 適切なマージンに調整してください */
+    }
+
+    img {
+        margin-top: 20px;
+    }
+
+    p:last-child {
+        margin-bottom: 40px;
+    }
 }

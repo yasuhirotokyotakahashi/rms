@@ -8,7 +8,7 @@ use App\Models\UserShopRole;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class RepresentativeReservationController extends Controller
+class RepresentativeController extends Controller
 {
     //
     public function showShopReservations()

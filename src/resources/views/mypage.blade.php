@@ -2,17 +2,18 @@
 
 @section('content')
     <div class="container">
-        <!-- 予約変更成功メッセージを表示 -->
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+
         <div class="row">
             <!-- 左側の予約状況 -->
             <div class="card card-left">
                 <div class="card-header">予約状況</div>
                 <div class="card-body">
+                    <!-- 予約変更成功メッセージを表示 -->
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <!-- 予約情報を表示 -->
                     <div class="card-row">
                         @foreach ($reservations as $reservation)
@@ -46,7 +47,7 @@
                             <div class="shop-item">
                                 <div class="card">
                                     <div class="card__img">
-                                        <img src="{{ asset($shop->image_path) }}" alt="{{ $shop->name }}">
+                                        <img src="{{ asset('storage/' . $shop->image_path) }}" alt="{{ $shop->name }}">
                                     </div>
                                     <div class="card__content">
                                         <h2 class="card__content-ttl">{{ $shop->name }}</h2>
