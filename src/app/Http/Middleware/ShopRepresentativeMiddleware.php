@@ -31,11 +31,11 @@ class ShopRepresentativeMiddleware
         foreach ($userShopRoles as $userShopRole) {
             // $userShopRole->shop で店舗にアクセス
             // $userShopRole->role で役割にアクセス
-            if ($userShopRole->shop_id == $shopId) {
+            if ($userShopRole->role->name == 'Representative') {
                 return $next($request);
             }
         }
-        // 代表者がアクセス権を持たない場合は、エラーを返すかリダイレクトする
+        // アクセス者が代表者権を持たない場合は、エラーを返すかリダイレクトする
         return abort(403, 'アクセス権がありません');
     }
 }

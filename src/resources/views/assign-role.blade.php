@@ -44,7 +44,7 @@
             </div>
         @endif
 
-        <form action="{{ route('assignShopRepresentative') }}" method="POST">
+        <form action="{{ route('assignRole') }}" method="POST">
             @csrf
 
             <div class="form-group">

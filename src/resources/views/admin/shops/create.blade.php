@@ -5,8 +5,9 @@
         <div class="card__content">
             <h2 class="card__content-ttl">店舗情報の編集</h2>
             <!-- 店舗情報の編集フォーム -->
-            <form action="{{ route('update-shop', $reservations->first()->shop->id) }}" method="POST"
-                enctype="multipart/form-data" class="shop-registration-form">
+            <form
+                action="{{ $reservations->isNotEmpty() ? route('update-shop', $reservations->first()->shop->id) : '#' }}"
+                method="POST" enctype="multipart/form-data" class="shop-registration-form">
                 @csrf
                 @method('PUT')
 
@@ -39,22 +40,8 @@
                 </div>
 
                 <button type="submit">更新</button>
+                <a href="{{ route('representative.index') }}" class="back-button">戻る</a>
             </form>
-
-
-            <!-- 予約情報の表示 -->
-            <div class="form-group">
-                <label for="reservations">予約情報:</label>
-                <ul>
-                    @foreach ($reservations as $reservation)
-                        <li>
-                            <a href="{{ route('reservations.show', $reservation->id) }}">
-                                {{ $reservation->user->name }} - {{ $reservation->date }} - {{ $reservation->time }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
         </div>
     </div>
 </div>

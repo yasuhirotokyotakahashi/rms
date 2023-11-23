@@ -100,20 +100,4 @@ class ReservationController extends Controller
 
         return redirect('/mypage')->with('success', '予約が削除されました。');
     }
-
-    // public function showShopReservations($shopId)
-    // {
-    //     // ログイン中の店舗代表者のIDを取得
-    //     $representativeId = auth()->user()->id;
-
-    //     // 指定された店舗IDが、代表者が所属する店舗であることを確認
-    //     $shop = Shop::where('id', $shopId)
-    //         ->where('representative_id', $representativeId)
-    //         ->firstOrFail();
-
-    //     // 指定店舗に関連する予約情報を取得
-    //     $reservations = $shop->reservations;
-
-    //     return view('shop.reservations', ['reservations' => $reservations]);
-    // }
 }

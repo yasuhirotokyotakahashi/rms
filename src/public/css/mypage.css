@@ -109,6 +109,30 @@
     margin: 0 10px;
 }
 
+.heart-button1 {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: #ff0000;
+    /* ハートの色を赤に設定（任意の色に変更可能） */
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    /* ハートボタンと詳しく見るリンクの間にマージンを追加 */
+}
+
+.heart-button2 {
+    display: inline-block;
+    background: none;
+    border: none;
+    color: blue;
+    /* ハートの色を赤に設定（任意の色に変更可能） */
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    /* ハートボタンと詳しく見るリンクの間にマージンを追加 */
+}
+
 /* 既存のCSSスタイルを追加 */
 
 /* レスポンシブスタイル */

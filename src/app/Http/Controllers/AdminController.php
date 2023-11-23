@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     //
-    public function showAssignShopRoleForm()
+    public function showAssignRoleForm()
     {
         // ユーザーと役割のデータを取得
         $users = User::all(); // ユーザーの一覧を取得
@@ -28,7 +28,7 @@ class AdminController extends Controller
     }
 
 
-    public function assignShopRepresentative(Request $request)
+    public function assignRole(Request $request)
     {
         $userId = $request->input('userId');
         $shopId = $request->input('shopId');

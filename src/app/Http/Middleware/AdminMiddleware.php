@@ -29,9 +29,9 @@ class AdminMiddleware
             // $userShopRole->role で役割にアクセス
             if ($userShopRole->role->name == 'Admin') {
                 return $next($request);
-            } else {
-                abort(404);
             }
         }
+        // アクセス者が管理者権限を持たない場合は、エラーを返すかリダイレクトする
+        return abort(403, 'アクセス権がありません');
     }
 }

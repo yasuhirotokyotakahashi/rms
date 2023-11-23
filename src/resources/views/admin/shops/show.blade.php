@@ -9,3 +9,4 @@
 <img src="{{ $qrCode }}" alt="Reservation QR Code">
 
 <!-- 他の予約詳細情報の表示 -->
+<a href="{{ route('representative.index') }}" class="back-button">戻る</a>

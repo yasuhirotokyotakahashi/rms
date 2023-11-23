@@ -11,7 +11,28 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class RepresentativeController extends Controller
 {
     //
-    public function showShopReservations()
+
+    public function showShopInfo()
+    {
+        $shops = Shop::all();
+
+        // ログイン中の代表者のユーザーIDを取得
+        $userId = auth()->user()->id;
+
+        // 代表者に関連付けられた店舗IDを取得
+        $shopIds = UserShopRole::where('user_id', $userId)->pluck('shop_id')->toArray();
+
+        // 代表者に関連付けられた店舗の予約情報を取得
+        $reservations = Reservation::whereIn('shop_id', $shopIds)->get();
+
+        // Check if reservations exist
+        if ($reservations->isEmpty()) {
+            return view('admin.shops.create', compact('shops'))->with('error', 'No reservations found.');
+        }
+
+        return view('admin.shops.index', compact('shops', 'reservations'));
+    }
+    public function editShopInfo()
     {
         $shops = Shop::all();
 
@@ -48,7 +69,7 @@ class RepresentativeController extends Controller
         return view('admin.shops.show', compact('reservation', 'qrCode', 'id'));
     }
 
-    public function updateShop(Request $request, $shopId)
+    public function updateShopInfo(Request $request, $shopId)
     {
         // 店舗情報を特定し、リクエストからのデータで更新
         $shop = Shop::find($shopId);

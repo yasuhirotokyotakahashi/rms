@@ -18,7 +18,22 @@
                                 <h2 class="card__content-ttl">{{ $shop->name }}</h2>
                                 <div class="card__content-tag">{{ $shop->genre->name }}</div>
                                 <div class="card__content-tag">{{ $shop->address->city }}</div>
-                                <button class="heart-button">❤️</button>
+                                <!-- お気に入りボタン -->
+                                @if (Auth::check())
+                                    <!-- ログインしているユーザーかどうかを確認 -->
+                                    @if (Auth::user()->favorites->contains($shop))
+                                        <form action="{{ route('favorites.destroy', $shop) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="heart-button1" type="submit">❤</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('favorites.store', $shop) }}" method="POST">
+                                            @csrf
+                                            <button class="heart-button2" type="submit">❤</button>
+                                        </form>
+                                    @endif
+                                @endif
                                 <a class="card__content-link"
                                     href="{{ route('shops.show', ['shop_id' => $shop->id]) }}">詳しく見る</a>
                             </div>

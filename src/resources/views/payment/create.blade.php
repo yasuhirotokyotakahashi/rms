@@ -18,7 +18,7 @@
         <div class="col-6 card">
             <div class="card-header">Stripe決済</div>
             <div class="card-body">
-                <form id="card-form" action="http://localhost/payment/store3" method="POST">
+                <form id="card-form" action="http://localhost/payment/checkout" method="POST">
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

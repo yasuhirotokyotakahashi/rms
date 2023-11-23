@@ -11,12 +11,12 @@ class PaymentController extends Controller
 {
 
 
-    public function create()
+    public function showCheckoutForm()
     {
         return view('payment.create');
     }
 
-    public function store(Request $request)
+    public function processCheckout(Request $request)
     {
         \Stripe\Stripe::setApiKey(config('services.stripe.stripe_secret_key'));
 

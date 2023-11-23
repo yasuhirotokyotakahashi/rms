@@ -29,7 +29,7 @@ class FavoritesController extends Controller
 
     public function destroy(Shop $shop)
     {
-        Auth::user()->favorites()->detach($shop); //波線は問題なし
+        Auth::user()->favorites()->detach($shop->id); //波線は問題なし
         return back();
     }
 }

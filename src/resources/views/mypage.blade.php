@@ -60,12 +60,12 @@
                                                 <form action="{{ route('favorites.destroy', $shop) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit">好き</button>
+                                                    <button class="heart-button1" type="submit">❤</button>
                                                 </form>
                                             @else
                                                 <form action="{{ route('favorites.store', $shop) }}" method="POST">
                                                     @csrf
-                                                    <button type="submit">嫌い</button>
+                                                    <button type="submit">♡</button>
                                                 </form>
                                             @endif
                                         @endif

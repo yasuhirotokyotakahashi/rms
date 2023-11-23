@@ -78,12 +78,19 @@
 
                         <div class="form-group">
                             <label for="reservation-time">予約時刻</label>
-                            <input type="time" id="reservation-time" name="reservation_time" required>
+                            <select id="reservation-time" name="reservation_time" required>
+                                @for ($i = 0; $i < 24; $i++)
+                                    @for ($j = 0; $j < 60; $j += 30)
+                                        <option value="{{ sprintf('%02d:%02d', $i, $j) }}">
+                                            {{ sprintf('%02d:%02d', $i, $j) }}</option>
+                                    @endfor
+                                @endfor
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label for="party-size">人数</label>
-                            <input type="number" id="party-size" name="party_size" required>
+                            <input type="number" id="party-size" name="party_size" required min="1" step="1">
                         </div>
 
                         <div class="selected-conditions">
