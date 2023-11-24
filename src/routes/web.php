@@ -68,6 +68,8 @@ Route::middleware(['admin.middleware'])->group(function () {
     Route::post('/create', [ShopController::class, 'store'])->name('shops.store');
 });
 
+
+
 Route::middleware(['shop.representative'])->group(function () {
     Route::get('/representative', [RepresentativeController::class, 'showShopInfo'])->name('representative.index');
     Route::get('/representative/edit', [RepresentativeController::class, 'editShopInfo'])->name('representative.edit');
@@ -75,6 +77,8 @@ Route::middleware(['shop.representative'])->group(function () {
     Route::put('/update-shop/{shopId}', [RepresentativeController::class, 'updateShopInfo'])->name('update-shop');
     Route::post('/shops/{shop_id}', [ShopController::class, 'update'])->name('shops.update');
 });
+
+
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
