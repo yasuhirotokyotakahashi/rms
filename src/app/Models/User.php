@@ -60,10 +60,6 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withPivot('role_id');
     }
 
-
-
-
-
     public function reservations()
     {
         return $this->hasMany(Reservation::class);

@@ -30,5 +30,4 @@ class Reservation extends Model
         return $this->belongsTo(Shop::class);
     }
 
-    // 他のリレーションやメソッドを定義することもできます
 }
