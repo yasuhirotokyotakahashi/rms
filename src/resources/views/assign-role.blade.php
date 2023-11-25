@@ -96,18 +96,18 @@
     <div class="container">
         <h1>全ての店舗の予約情報</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>店舗名</th>
-                    <th>ユーザー名</th>
-                    <th>予約日</th>
-                    <th>予約時間</th>
-                    <th>ゲスト数</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($allReservations as $reservation)
+        @forelse ($allReservations as $reservation)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>店舗名</th>
+                        <th>ユーザー名</th>
+                        <th>予約日</th>
+                        <th>予約時間</th>
+                        <th>ゲスト数</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr>
                         <td>{{ $reservation->shop->name }}</td>
                         <td>{{ $reservation->user->name }}</td>
@@ -115,8 +115,10 @@
                         <td>{{ $reservation->time }}</td>
                         <td>{{ $reservation->guests }}人</td>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        @empty
+            <p>予約情報はありません。</p>
+        @endforelse
     </div>
 </body>
