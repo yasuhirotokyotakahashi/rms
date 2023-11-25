@@ -13,7 +13,7 @@
                         <div class="card">
                             <div class="card__img">
                                 <img src="{{ asset('storage/' . $shop->image_path) }}" alt="{{ $shop->name }}">
-                                //下はec2で表示
+                                <!-- 下はec2の際 -->
                                 {{-- <img src="{{ asset($shop->image_path) }}" alt="{{ $shop->name }}"> --}}
                             </div>
                             <div class="card__content">
