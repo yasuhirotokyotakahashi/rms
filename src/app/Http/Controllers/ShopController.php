@@ -66,7 +66,8 @@ class ShopController extends Controller
             $shop->name = $request->input('name');
             $shop->description = $request->input('description');
             $shop->image_path = $imagePath; // 保存したファイルパスをimage_pathに設定
-            dd($shop->image_path);
+            $shop->address_id = 1;
+            $shop->genre_id = 1;
             $shop->save();
         }
 
