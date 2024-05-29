@@ -16,12 +16,12 @@ class CreateUserShopRoleTable extends Migration
         Schema::create('user_shop_role', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('shop_id');
+            $table->unsignedBigInteger('shop_id')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->foreign('shop_id')->references('id')->on('shops')->nullable();
             $table->foreign('role_id')->references('id')->on('roles');
         });
     }

@@ -1,8 +1,80 @@
-/* 共通スタイル（すべての画面サイズに適用） */
-.welcome-message {
-    text-align: center; /* テキストを中央揃えに */
-    font-size: 1.5rem; /* フォントサイズを大きく */
-    margin-bottom: 20px; /* 下の余白を追加 */
+.shop-review-container {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1200px; /* コンテナの最大幅を設定 */
+    padding: 20px;
+}
+
+.shop-review-left {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.shop-review-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+}
+
+.shop-review-info {
+    margin-top: 20px;
+}
+
+.shop-detail-address {
+    font-weight: bold;
+}
+
+.shop-detail-genre {
+    color: #666;
+    /* ジャンルの色を指定 */
+}
+
+.shop-info {
+    max-width: 400px; /* 店舗情報の最大幅を設定 */
+    margin: 0 auto;
+}
+
+.shop-review-right {
+    flex: 1;
+    padding: 20px;
+    background-color: #3498db;
+    /* 右側のセクションのスタイル */
+    color: #fff;
+}
+.rating-stars {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    display: inline-block;
+    padding: 5px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.rating-stars label:hover,
+.rating-stars label:hover ~ label,
+.rating-stars input[type="radio"]:checked ~ label {
+    color: #ffcc00;
+}
+
+.rating-stars .star {
+    display: inline-block;
+    padding: 5px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: default;
+}
+
+.rating-stars .filled {
+    color: #ffcc00;
 }
 
 .card__img img {
@@ -70,45 +142,4 @@
     cursor: pointer;
     margin-left: 10px;
     /* ハートボタンと詳しく見るリンクの間にマージンを追加 */
-}
-
-/* デスクトップ向けスタイル */
-@media (min-width: 769px) {
-    .shop-row {
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0 -20px;
-    }
-
-    .shop-item {
-        width: 300px;
-        margin: 0 20px 20px 0;
-        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .card {
-        width: 300px;
-        margin: 0 20px 20px 0;
-    }
-}
-
-/* タブレット向けスタイル */
-@media (max-width: 768px) {
-    .shop-item {
-        width: 48%;
-        margin: 0 1% 20px 1%;
-    }
-
-    .card {
-        width: 100%;
-        margin: 0 0 20px 0;
-    }
-}
-
-/* スマートフォン向けスタイル */
-@media (max-width: 480px) {
-    .shop-item {
-        width: 100%;
-        margin: 0 0 20px 0;
-    }
 }

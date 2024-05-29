@@ -8,11 +8,36 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
-        $shops = Shop::all();
+        $sort = $request->input('sort', 'default');
+        // 評価がある店舗と評価がない店舗をそれぞれ取得
+        $ratedShops = Shop::withCount('reviews')->whereHas('reviews');
+        $unratedShops = Shop::withCount('reviews')->whereDoesntHave('reviews');
 
+        // 評価がある店舗を評価の高い順に、評価がない店舗を後ろに配置して取得
+        if (
+            $sort === 'rating_desc'
+        ) {
+            $ratedShops = $ratedShops->orderByDesc('reviews_count');
+            $unratedShops = $unratedShops->orderBy('id'); // ここを適切な並び替えに変更してください
+        } elseif ($sort === 'rating_asc') {
+            $ratedShops = $ratedShops->orderBy('reviews_count');
+            $unratedShops = $unratedShops->orderBy('id'); // ここを適切な並び替えに変更してください
+        }
+
+        // 店舗データを結合
+        $shops = $ratedShops->get()->concat($unratedShops->get());
+
+        // 必要に応じてランダムに並べ替える
+        if (
+            $sort === 'random'
+        ) {
+            $shops = $shops->shuffle();
+        } elseif ($sort === 'default') {
+            $shops = Shop::all();
+        }
 
         return view('shops.index', compact('shops'));
     }
@@ -29,6 +54,7 @@ class ShopController extends Controller
 
         // 指定された店舗のレビュー情報を取得
         $reviews = $shop->reviews;
+
 
         // 取得した詳細情報をビューに渡す
         return view('shops.show', compact('shop', 'reviews'));

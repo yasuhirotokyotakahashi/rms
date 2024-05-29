@@ -2,6 +2,17 @@
 
 @section('content')
     <h1>店舗詳細</h1>
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="shop-detail-container">
         <div class="shop-detail-left">
@@ -38,11 +49,34 @@
                 @if ($reviews->isEmpty())
                     <p>まだレビューがありません。</p>
                 @else
-                    <ul>
+                    <ul class="shop-reviews">
                         @foreach ($reviews as $review)
-                            <li>
-                                <div class="review-rating">評価: {{ $review->rating }}/5</div>
-                                <p class="review-comment">{{ $review->comment }}</p>
+                            <li class="review-item">
+                                <div class="review-header">
+                                    <div class="rating-stars">
+                                        @for ($i = 5; $i >= 1; $i--)
+                                            <span class="star {{ $i <= $review->rating ? 'filled' : '' }}">&#9733;</span>
+                                        @endfor
+                                    </div>
+                                    @auth
+                                        @if ($review->user_id === auth()->user()->id)
+                                            <div class="review-actions">
+                                                <!-- 編集ボタン -->
+                                                <a href="{{ route('reviews.edit', ['review_id' => $review->id]) }}">編集</a>
+                                                <!-- 削除ボタン -->
+                                                <form action="{{ route('reviews.delete', ['review_id' => $review->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit">削除</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    @endauth
+                                </div>
+                                <div class="review-body">
+                                    <p class="review-comment">{{ $review->comment }}</p>
+                                </div>
                             </li>
                         @endforeach
                     </ul>
@@ -102,26 +136,40 @@
                     </form>
                 </div>
 
-                <!-- レビューフォーム -->
-                <form action="{{ route('reviews.submit', ['shop_id' => $shop->id]) }}" method="POST">
-                    @csrf
 
-                    <label for="rating">評価:</label>
-                    <select name="rating" id="rating">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
+                <p>評価と口コミ</p>
+                <a href="{{ route('reviews.showForm', ['shop_id' => $shop->id]) }}">レビューを投稿する</a>
+                {{-- <div class="form-container">
+                    <!-- レビューフォーム -->
+                    <form action="{{ route('reviews.submit', ['shop_id' => $shop->id]) }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <div>
+                                <label for="rating">評価:</label>
+                                <div class="rating-stars">
+                                    <input type="radio" id="star5" name="rating" value="5">
+                                    <label for="star5" title="5 stars">&#9733;</label>
+                                    <input type="radio" id="star4" name="rating" value="4">
+                                    <label for="star4" title="4 stars">&#9733;</label>
+                                    <input type="radio" id="star3" name="rating" value="3">
+                                    <label for="star3" title="3 stars">&#9733;</label>
+                                    <input type="radio" id="star2" name="rating" value="2">
+                                    <label for="star2" title="2 stars">&#9733;</label>
+                                    <input type="radio" id="star1" name="rating" value="1">
+                                    <label for="star1" title="1 star">&#9733;</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">コメント:</label>
+                            <textarea name="comment" id="comment" rows="4"></textarea>
+                        </div>
 
-                    <label for="comment">コメント:</label>
-                    <textarea name="comment" id="comment" rows="4"></textarea>
+                        <input type="hidden" name="shop_id" value="{{ $shop->id }}">
 
-                    <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-
-                    <button type="submit">評価とコメントを投稿</button>
-                </form>
+                        <button type="submit">評価とコメントを投稿</button>
+                    </form>
+                </div> --}}
             </div>
         </div>
     </div>

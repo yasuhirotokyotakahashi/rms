@@ -64,6 +64,10 @@
 
 .form-group {
     margin-bottom: 15px;
+    text-align: center;
+}
+.form-group > div {
+    display: inline-block; /* 子要素をインラインブロック要素にする */
 }
 
 .form-group label {
@@ -80,32 +84,20 @@
 }
 
 .selected-conditions {
-    .selected-conditions {
-        margin-top: 20px;
-        font-weight: bold;
-        font-size: 20px;
-        /* フォントサイズをより大きく */
-        background-color: #3498db;
-        /* 背景色を追加 */
-        color: #fff;
-        /* テキストカラーを白に設定 */
-        padding: 15px;
-        /* パディングを追加して見た目を調整 */
-        border-radius: 8px;
-        /* 角丸に */
-        display: inline-block;
-        /* インラインブロック要素に変更 */
-    }
-
-    .selected-conditions span {
-        color: #ff0;
-        /* spanのテキストカラーを変更 */
-    }
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    display: inline-block;
 }
 
 .selected-conditions span {
-    color: #3498db;
+    color: #ff0;
 }
+
 
 button[type="submit"] {
     background-color: #3498db;
@@ -117,26 +109,97 @@ button[type="submit"] {
     cursor: pointer;
 }
 
-.alert.alert-danger {
-    background-color: #ff6b6b;
-    /* エラーメッセージの背景色 */
-    color: #fff;
-    /* エラーメッセージのテキストカラー */
-    border: 1px solid #e65050;
-    /* エラーメッセージのボーダー */
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-/* エラーメッセージ内のリストスタイルを設定 */
-.alert.alert-danger ul {
-    list-style-type: square;
-    margin-left: 20px;
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
 }
 
-/* エラーメッセージ内の各エラー項目をスタイル */
-.alert.alert-danger li {
-    font-weight: bold;
-    font-size: 14px;
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.rating-stars {
+    display: inline-block;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    display: inline-block;
+    padding: 5px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.rating-stars label:hover,
+.rating-stars label:hover ~ label,
+.rating-stars input[type="radio"]:checked ~ label {
+    color: #ffcc00;
+}
+
+.rating-stars .star {
+    display: inline-block;
+    padding: 5px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: default; /* カーソルを変更する必要がないので、デフォルトに設定 */
+}
+
+.rating-stars .filled {
+    color: #ffcc00; /* 塗りつぶされた星の色 */
+}
+
+.shop-reviews {
+    list-style-type: none;
+    padding: 0;
+}
+
+.review-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.review-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.review-comment {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
 }

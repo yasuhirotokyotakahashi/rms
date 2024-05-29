@@ -17,6 +17,15 @@
         <div class="header__inner">
             <div class="header-utilities">
                 <a class="header__logo" href="/">Rese</a>
+                <div class="form-group">
+                    <label for="sort">ソート:</label>
+                    <select name="sort" id="sort">
+                        <option value="default">デフォルト</option>
+                        <option value="random">ランダム</option>
+                        <option value="rating_desc">評価が高い順</option>
+                        <option value="rating_asc">評価が低い順</option>
+                    </select>
+                </div>
                 @if (Request::path() === '/' || Request::is('shops/search'))
                     <!-- 店舗一覧画面のパスに応じて条件分岐 -->
                     <form class="search-form" action="{{ route('shops.search') }}" method="POST">
@@ -51,6 +60,16 @@
                             <li class="header-nav__item">
                                 <a class="header-nav__link" href="/mypage">MYPAGE</a>
                             </li>
+                            @if (auth()->check() && auth()->user()->roles()->where('role_id', 1)->exists())
+                                <li class="header-nav__item">
+                                    <a class="header-nav__link" href="/admin">管理者専用画面へ</a>
+                                </li>
+                            @endif
+                            @if (auth()->check() && auth()->user()->roles()->where('role_id', 2)->exists())
+                                <li class="header-nav__item">
+                                    <a class="header-nav__link" href="/representative">店舗代表者専用画面へ</a>
+                                </li>
+                            @endif
                         @else
                             <!-- ユーザーがログインしていない場合 -->
                             <li class="header-nav__item">
@@ -75,3 +94,10 @@
 </body>
 
 </html>
+
+<script>
+    document.getElementById('sort').addEventListener('change', function() {
+        var selectedValue = this.value;
+        window.location.href = "{{ route('shops.index') }}?sort=" + selectedValue;
+    });
+</script>

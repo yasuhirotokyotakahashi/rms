@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Shop extends Model
 {
@@ -58,5 +59,32 @@ class Shop extends Model
     public function scopeSearchByName($query, $name)
     {
         return $query->where('name', 'like', '%' . $name . '%');
+    }
+
+    public function csvHeader(): array
+    {
+        return [
+            'name',
+            'address_id',
+            'genre_id',
+            'description',
+            'image_path',
+        ];
+    }
+
+    public function getCsvData(): \Illuminate\Support\Collection
+    {
+        $data = DB::table('shops')->get();
+        return $data;
+    }
+    public function insertRow($row): array
+    {
+        return [
+            $row->name,
+            $row->address_id,
+            $row->genre_id,
+            $row->description,
+            $row->image_path,
+        ];
     }
 }

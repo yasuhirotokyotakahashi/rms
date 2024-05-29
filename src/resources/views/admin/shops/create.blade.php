@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('css/representative/index.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/representative/create.css') }}">
 <!-- 店舗情報の編集フォーム -->
 <div class="shop-item">
     <div class="card">

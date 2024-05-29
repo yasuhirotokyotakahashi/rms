@@ -1,0 +1,57 @@
+/* レビュー編集フォーム全体のスタイル */
+.edit-review-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* 評価スタイル */
+.rating-stars {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    display: inline-block;
+    padding: 5px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.rating-stars label:hover,
+.rating-stars label:hover ~ label,
+.rating-stars input[type="radio"]:checked ~ label {
+    color: #ffcc00;
+}
+
+/* カード画像のスタイル */
+.card__img {
+    margin-bottom: 20px;
+}
+
+.card__img img {
+    width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+}
+
+/* 画像アップロードボタンのスタイル */
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+/* 画像プレビューのスタイル */
+#image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 10px;
+}

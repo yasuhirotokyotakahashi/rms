@@ -1,8 +1,12 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('css/assign-shop-role.css') }}">
+@extends('layouts.app')
 
-<body>
-
+@section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <h1>全てのユーザー一覧</h1>
 
         <table class="table">
@@ -19,7 +23,15 @@
                 @foreach ($allUsers as $user)
                     <tr>
                         <td>{{ $user->user->name }}</td>
-                        <td>{{ $user->shop->name }}</td>
+                        <td>
+                            @if ($user->role->name === 'Admin')
+                                管理者
+                            @elseif ($user->shop)
+                                {{ $user->shop->name }}
+                            @else
+                                未所属
+                            @endif
+                        </td>
                         <td>{{ $user->user->email }}</td>
                         <td>{{ $user->role->name }}</td>
                         <td>
@@ -36,13 +48,9 @@
         </table>
     </div>
     <div class="container">
-        <h1>役割をユーザーに割り当てる</h1>
+        <h1>店舗代表者任命</h1>
 
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+
 
         <form action="{{ route('assignRole') }}" method="POST">
             @csrf
@@ -68,13 +76,11 @@
             <div class="form-group">
                 <label for="roleId">役割を選択:</label>
                 <select name="roleId" id="roleId" class="form-control">
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">{{ $role->name }}</option>
-                    @endforeach
+                    <option value="{{ $representativeRoleId }}">店舗代表者</option>
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">役割をユーザーに割り当てる</button>
+            <button type="submit" class="btn btn-primary">店舗代表者権限を与える</button>
         </form>
     </div>
 
@@ -121,4 +127,9 @@
             <p>予約情報はありません。</p>
         @endforelse
     </div>
-</body>
+
+
+    @push('styles')
+        <link href="{{ asset('css/assign-shop-role.css') }}" rel="stylesheet">
+    @endpush
+@endsection

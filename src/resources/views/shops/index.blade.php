@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    @auth
+        <p class="welcome-message">{{ Auth::user()->name }} 様、ようこそ！</p>
+    @endauth
     <h1>店舗一覧</h1>
 
     <div class="shop-list">
@@ -13,6 +16,7 @@
                         <div class="card">
                             <div class="card__img">
                                 <img src="{{ asset('storage/' . $shop->image_path) }}" alt="{{ $shop->name }}">
+                                <img src="{{ $shop->image_path }}" alt="{{ $shop->name }}">
                                 <!-- 下はec2の際 -->
                                 {{-- <img src="{{ asset($shop->image_path) }}" alt="{{ $shop->name }}"> --}}
                             </div>

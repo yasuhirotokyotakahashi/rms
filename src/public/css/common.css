@@ -1,17 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 .header {
     background-color: green;
+    padding: 10px 0;
 }
 
 .header__inner {
+    max-width: 90%;
     margin: 0 auto;
-    padding: 20px 15px;
-    max-width: 1230px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .header-utilities {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    flex-grow: 1; /* ロゴとナビゲーションの間の余白を調整 */
 }
 
 .header__logo {
@@ -26,9 +34,13 @@
 }
 
 .header-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav__item {
+    margin-right: 20px;
 }
 
 .header-nav__link {

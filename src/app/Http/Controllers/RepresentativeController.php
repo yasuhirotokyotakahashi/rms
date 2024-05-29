@@ -12,6 +12,11 @@ class RepresentativeController extends Controller
 {
     //
 
+    public function index()
+    {
+        return view('representative.index');
+    }
+
     public function showShopInfo()
     {
         $shops = Shop::all();

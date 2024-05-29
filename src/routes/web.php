@@ -57,26 +57,34 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/shops/{shop_id}/review', [ReviewController::class, 'showReviewForm'])->name('reviews.showForm');
     Route::post('/shops/{shop_id}/review', [ReviewController::class, 'store'])->name('reviews.submit');
     Route::get('/shops/{shop_id}/reviews', [ReviewController::class, 'showReviews'])->name('reviews.show');
+    Route::get('/review/{review_id}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
+    Route::put('/review/{review_id}/update', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/review/{review_id}', [ReviewController::class, 'delete'])->name('reviews.delete');
 });
 
 
 Route::middleware(['admin.middleware'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/assign-role', [AdminController::class, 'showAssignRoleForm'])->name('showAssignShopRoleForm');
     Route::post('/assign-role', [AdminController::class, 'assignRole'])->name('assignRole');
     Route::post('/unassign-role', [AdminController::class, 'unassignRoleFromUser'])->name('unassignRoleFromUser');
-    Route::get('/create', [ShopController::class, 'create'])->name('shops.create');
-    Route::post('/create', [ShopController::class, 'store'])->name('shops.store');
 });
 
 
 
 Route::middleware(['shop.representative'])->group(function () {
-    Route::get('/representative', [RepresentativeController::class, 'showShopInfo'])->name('representative.index');
+    Route::get('/representative', [RepresentativeController::class, 'index'])->name('representative.index');
+    Route::get('/representative/shop', [RepresentativeController::class, 'showShopInfo'])->name('representative.info');
     Route::get('/representative/edit', [RepresentativeController::class, 'editShopInfo'])->name('representative.edit');
     Route::get('/reservations/{id}', [RepresentativeController::class, 'show'])->name('reservations.show');
     Route::put('/update-shop/{shopId}', [RepresentativeController::class, 'updateShopInfo'])->name('update-shop');
     Route::post('/shops/{shop_id}', [ShopController::class, 'update'])->name('shops.update');
+    Route::get('/create', [ShopController::class, 'create'])->name('shops.create');
+    Route::post('/create', [ShopController::class, 'store'])->name('shops.store');
 });
+
+Route::get('/csv', [AdminController::class, 'csv'])->name('csv.csv');
+Route::post('/csv', [AdminController::class, 'run'])->name('csv.run');
 
 
 

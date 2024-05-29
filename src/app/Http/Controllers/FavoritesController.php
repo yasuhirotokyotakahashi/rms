@@ -29,7 +29,15 @@ class FavoritesController extends Controller
 
     public function destroy(Shop $shop)
     {
-        Auth::user()->favorites()->detach($shop->id); //波線は問題なし
-        return back();
+        // ログインしているユーザーのIDを取得
+        $userId = Auth::id();
+
+        // お気に入りから削除
+        if ($shop->favoritedBy()->where('user_id', $userId)->exists()) {
+            Auth::user()->favorites()->detach($shop->id);
+            return back()->with('success', 'お気に入りから削除しました');
+        } else {
+            return back()->with('error', 'お気に入りから削除できませんでした');
+        }
     }
 }

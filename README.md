@@ -81,9 +81,30 @@ Rese（リーズ）は、ある企業のグループ会社の飲食店予約サ�
 ![rmsER図](https://github.com/yasuhirotokyotakahashi/rms/assets/128282431/d6dac7d8-e118-4766-9d73-fd2e001a2368)
 
 ## 環境構築
-プロジェクトをローカルで実行するための手順を以下に示します。
+プロジェクトをローカルで実行するための手順を以下に示します。docker及びdocker-composeは導入済みとします。
 
-1. dockerをインストールする
-2. docker-composeをインストールする
-3. リポジトリをクローンする
-4. docker-compose.ymlのある場所でビルドをする。
+
+```bash
+mkdir my-project
+cd my-project
+```
+my-projectの箇所はお好きなディレクトリ名で作成してください。
+```bash
+git clone　https://github.com/yasuhirotokyotakahashi/rms.git
+sudo chmod -R 777 *
+cd rms
+```
+ここからdockerのビルドから最後まで一気に行います。
+```bash
+docker compose build
+docker compose up -d
+docker compose exec php bash
+
+composer install
+
+php artisan key:generate
+
+```
+
+##　無事localhostでアクセスできると思います。
+必要に応じて、php artisan storage:linkなどもご使用ください。

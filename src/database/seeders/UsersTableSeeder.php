@@ -25,11 +25,24 @@ class UsersTableSeeder extends Seeder
         // 各店舗のデフォルト代表者ユーザーを作成
         $shops = Shop::all();
 
+        // Adminユーザーを作成
+        $admin = User::create([
+            'name' => '管理者',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        // Adminに関連付けられた店舗IDを保存
+        UserShopRole::create([
+            'user_id' => $admin->id,
+            'role_id' => $adminRole->id,
+        ]);
+
         foreach ($shops as $shop) {
             // 代表者ユーザーを作成
             $representative = User::create([
                 'name' => $shop->name . '代表者',
-                'email' => $shop->name . '_representative@example.com',
+                'email' => $shop->id . '_representative@example.com',
                 'password' => Hash::make('password'),
             ]);
 
@@ -38,20 +51,6 @@ class UsersTableSeeder extends Seeder
                 'user_id' => $representative->id,
                 'shop_id' => $shop->id,
                 'role_id' => $representativeRole->id,
-            ]);
-
-            // Adminユーザーを作成
-            $admin = User::create([
-                'name' => $shop->name . 'Admin',
-                'email' => $shop->name . '_admin@example.com',
-                'password' => Hash::make('password'),
-            ]);
-
-            // Adminに関連付けられた店舗IDを保存
-            UserShopRole::create([
-                'user_id' => $admin->id,
-                'shop_id' => $shop->id,
-                'role_id' => $adminRole->id,
             ]);
         }
     }

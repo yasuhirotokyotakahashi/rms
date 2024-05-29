@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'shop_id', 'rating', 'comment'];
+    protected $fillable = ['user_id', 'shop_id', 'rating', 'comment', 'image_path'];
 
     public function user()
     {
@@ -19,7 +19,4 @@ class Review extends Model
     {
         return $this->belongsTo(Shop::class);
     }
-
-
-
 }

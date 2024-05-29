@@ -18,6 +18,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('shop_id');
             $table->integer('rating'); // 5段階評価
+            $table->string('image_path')->nullable(); // 画像ファイルのパス
             $table->text('comment')->nullable();
             $table->timestamps();
 
