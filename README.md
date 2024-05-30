@@ -78,7 +78,7 @@ Rese（リーズ）は、ある企業のグループ会社の飲食店予約サ�
 
 ## ER図
 [ER図のイメージをここに挿入]
-![rmsER図](https://github.com/yasuhirotokyotakahashi/rms/assets/128282431/d6dac7d8-e118-4766-9d73-fd2e001a2368)
+![rms](https://github.com/yasuhirotokyotakahashi/rms/assets/128282431/b6b6c45c-d2e6-4f0b-a2ce-754a7b11dad6)
 
 ## 環境構築
 プロジェクトをローカルで実行するための手順を以下に示します。docker及びdocker-composeは導入済みとします。
