@@ -31,12 +31,6 @@
                         <input type="file" name="image" accept="image/*" required>
                     </div>
 
-                    <div class="form-group">
-                        <label>画像プレビュー:</label>
-                        <img id="image-preview" src="#" alt="画像プレビュー"
-                            style="max-width: 200px; max-height: 200px; display: none;">
-                    </div>
-
                     <button type="submit">登録</button>
                 </form>
             </div>

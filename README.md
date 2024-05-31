@@ -103,7 +103,6 @@ docker compose exec php bash
 composer install
 
 php artisan migrate
-
 php artisan db:seed
 
 ```
@@ -129,12 +128,12 @@ php artisan db:seed
 - 地域は「東京都」「大阪府」「福岡県」のいずれかを指定してください。
 - ジャンルは「寿司」「焼肉」「イタリアン」「居酒屋」「ラーメン」のいずれかを指定してください。
 - 店舗概要は400文字以内で入力してください。
-- 画像URLは「jpeg」または「png」形式の画像のみ指定してください。
+- 画像URL末尾は「jpeg」または「png」形式の画像のみ指定してください。
 
 上記のデータは、以下のようなCSV形式で提供されます：
 
 ```csv
-name,address_id,genre_id,description,image_url
+name,address,genre,description,image_url
 仙人,東京都,寿司,料理長厳選の食材から作る寿司を用いたコースをぜひお楽しみください。食材・味・価格、お客様の満足度を徹底的に追及したお店です。特別な日のお食事、ビジネス接待まで気軽に使用することができます。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg
 牛助,大阪府,焼肉,焼肉業界で20年間経験を積み、肉を熟知したマスターによる実力派焼肉店。長年の実績とお付き合いをもとに、なかなか食べられない希少部位も仕入れております。また、ゆったりとくつろげる空間はお仕事終わりの一杯や女子会にぴったりです。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
 

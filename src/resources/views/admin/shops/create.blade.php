@@ -32,13 +32,6 @@
                     <img src="{{ asset('storage/' . $reservations->first()->shop->image_path) }}" alt="店舗画像"
                         style="max-width: 200px; max-height: 200px;">
                 </div>
-
-                <div class="form-group">
-                    <label>画像プレビュー:</label>
-                    <img id="image-preview" src="#" alt="画像プレビュー"
-                        style="max-width: 200px; max-height: 200px; display: none;">
-                </div>
-
                 <button type="submit">更新</button>
                 <a href="{{ route('representative.index') }}" class="back-button">戻る</a>
             </form>

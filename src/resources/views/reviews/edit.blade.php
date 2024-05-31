@@ -24,10 +24,13 @@
 
             <div class="card__img">
                 <div>
-                    <img src="{{ asset('storage/' . $review->image_path) }}" alt="{{ $review->shop->name }}">
-                    <img src="{{ $review->image_path }}" alt="{{ $review->shop->name }}">
-                    <!-- 下はec2の際 -->
-                    {{-- <img src="{{ asset($shop->image_path) }}" alt="{{ $shop->name }}"> --}}
+                    @if (strpos($review->image_path, 'http') === 0)
+                        <!-- URLの場合 -->
+                        <img src="{{ $shop->image_path }}" alt="{{ $review->shop->name }}">
+                    @else
+                        <!-- ローカルの場合 -->
+                        <img src="{{ asset('storage/' . $review->image_path) }}" alt="{{ $review->shop->name }}">
+                    @endif
                 </div>
             </div>
 
@@ -36,11 +39,6 @@
                 <input type="file" name="image" accept="image/*" required>
             </div>
 
-            <div class="form-group">
-                <label>画像プレビュー:</label>
-                <img id="image-preview" src="#" alt="画像プレビュー"
-                    style="max-width: 200px; max-height: 200px; display: none;">
-            </div>
 
             <!-- レビューIDの隠しフィールド -->
             <input type="hidden" name="review_id" value="{{ $review->id }}">
