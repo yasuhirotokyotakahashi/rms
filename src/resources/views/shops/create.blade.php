@@ -2,6 +2,11 @@
 
 @section('content')
     <!-- 店舗登録フォーム -->
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="shop-item">
         <div class="card">
             <div class="card__content">
@@ -34,44 +39,6 @@
 
                     <button type="submit">登録</button>
                 </form>
-            </div>
-        </div>
-    </div>
-    <!-- 店舗予約情報表示 -->
-    <div class="shop-item">
-        <div class="card">
-            <div class="card__content">
-                <h2 class="card__content-ttl">現在の予約情報</h2>
-
-                @if ($reservations->count() > 0)
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>店舗名</th>
-                                <th>予約日</th>
-                                <th>予約時間</th>
-                                <th>予約者</th>
-                                <th>連絡先</th>
-                                <th>ゲスト数</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($reservations as $reservation)
-                                <tr>
-                                    <td>{{ $reservation->shop->name }}</td>
-                                    <td>{{ $reservation->date }}</td>
-                                    <td>{{ $reservation->time }}</td>
-                                    <td>{{ $reservation->user->name }}</td>
-                                    <td>{{ $reservation->user->email }}</td>
-                                    <td>{{ $reservation->guests }}</td>
-
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <p>現在、予約情報はありません。</p>
-                @endif
             </div>
         </div>
     </div>

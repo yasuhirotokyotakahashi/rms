@@ -36,27 +36,26 @@ Route::get('/thanks', function () {
 
     return view('thanks');
 })->middleware(['auth'])->name('thanks');
+
 Route::get('/', [ShopController::class, 'index'])->name('shops.index');
 Route::get('/detail/{shop_id}', [ShopController::class, 'show'])->name('shops.show'); // 店舗詳細
 Route::post('/shops/search', [ShopController::class, 'search'])->name('shops.search');
 
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('/mypage', [UserController::class, 'index']);
-    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index'); // 予約一覧
+    // 予約関連
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store'); // 予約を作成
     Route::get('/done', [ReservationController::class, 'thanks'])->name('reservation.thanks'); // 予約完了画面
     Route::get('/reservations/{reservationId}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
     Route::put('/reservations/{reservationId}', [ReservationController::class, 'update'])->name('reservations.update');
     Route::delete('/reservations/{reservationId}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
-    //お気に入り機能
+    // お気に入り関連
     Route::post('/favorites/{shop}', [FavoritesController::class, 'store'])->name('favorites.store');
     Route::delete('/favorites/{shop}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');
     // レビュー機能
-    Route::get('/shops/{shop_id}/review', [ReviewController::class, 'showReviewForm'])->name('reviews.showForm');
-    Route::post('/shops/{shop_id}/review', [ReviewController::class, 'store'])->name('reviews.submit');
-    Route::get('/shops/{shop_id}/reviews', [ReviewController::class, 'showReviews'])->name('reviews.show');
+    Route::get('/shops/{shop_id}/review', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/shops/{shop_id}/review', [ReviewController::class, 'store'])->name('reviews.store');
     Route::get('/review/{review_id}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
     Route::put('/review/{review_id}/update', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/review/{review_id}', [ReviewController::class, 'delete'])->name('reviews.delete');
@@ -68,6 +67,9 @@ Route::middleware(['admin.middleware'])->group(function () {
     Route::get('/assign-role', [AdminController::class, 'showAssignRoleForm'])->name('showAssignShopRoleForm');
     Route::post('/assign-role', [AdminController::class, 'assignRole'])->name('assignRole');
     Route::post('/unassign-role', [AdminController::class, 'unassignRoleFromUser'])->name('unassignRoleFromUser');
+    // CSV関連
+    Route::get('/csv', [AdminController::class, 'csv'])->name('csv.csv');
+    Route::post('/csv', [AdminController::class, 'run'])->name('csv.run');
 });
 
 
@@ -78,13 +80,11 @@ Route::middleware(['shop.representative'])->group(function () {
     Route::get('/representative/edit', [RepresentativeController::class, 'editShopInfo'])->name('representative.edit');
     Route::get('/reservations/{id}', [RepresentativeController::class, 'show'])->name('reservations.show');
     Route::put('/update-shop/{shopId}', [RepresentativeController::class, 'updateShopInfo'])->name('update-shop');
-    Route::post('/shops/{shop_id}', [ShopController::class, 'update'])->name('shops.update');
     Route::get('/create', [ShopController::class, 'create'])->name('shops.create');
     Route::post('/create', [ShopController::class, 'store'])->name('shops.store');
 });
 
-Route::get('/csv', [AdminController::class, 'csv'])->name('csv.csv');
-Route::post('/csv', [AdminController::class, 'run'])->name('csv.run');
+
 
 
 

@@ -12,18 +12,6 @@ use Illuminate\Support\Facades\Validator;
 class ReservationController extends Controller
 {
 
-
-
-    public function index()
-    {
-        // ログイン中のユーザーに関連する予約情報を取得
-
-        $user = Auth::user();
-        $reservations = $user->reservations;
-
-        return view('reservations.index', ['reservations' => $reservations]);
-    }
-
     public function showReservationForm()
     {
         return view('reservation.create');

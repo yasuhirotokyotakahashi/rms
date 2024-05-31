@@ -8,11 +8,12 @@
             <div class="card__content">
                 <!-- 編集ボタン -->
                 @if ($reservations->isNotEmpty() && $reservations->first()->shop)
-                    <a href="{{ route('representative.edit', $reservations->first()->shop->id) }}" class="edit-button">編集</a>
+                    <a href="{{ route('representative.edit', $reservations->first()->shop->id) }}"
+                        class="edit-button">店舗情報を変更する</a>
                 @else
                     <a href="#" class="edit-button" onclick="event.preventDefault()">編集</a>
                 @endif
-                <h2 class="card__content-ttl">店舗情報</h2>
+                <h2 class="card__content-ttl">店舗の情報</h2>
 
                 @if ($reservations->isNotEmpty() && $reservations->first()->shop)
                     <div class="form-group">

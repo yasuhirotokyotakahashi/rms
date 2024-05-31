@@ -31,43 +31,29 @@
 
 .shop-detail-right {
     flex: 1;
-    /* 修正: 左側と同じ幅に設定 */
     padding: 20px;
     display: flex;
     flex-direction: column;
     background-color: #3498db;
-    /* 背景色を青色に設定 */
     font-family: Arial, sans-serif;
     color: #fff;
     text-align: center;
 }
 
-.shop-detail-description h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.shop-detail-description p {
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.reservation-container {
+.shop-detail-right .reservation-container {
     padding: 20px;
+    margin-top: 20px;
 }
 
 .form-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
     margin-bottom: 15px;
-    text-align: center;
-}
-.form-group > div {
-    display: inline-block; /* 子要素をインラインブロック要素にする */
 }
 
 .form-group label {
@@ -91,13 +77,11 @@
     color: #fff;
     padding: 15px;
     border-radius: 8px;
-    display: inline-block;
 }
 
 .selected-conditions span {
     color: #ff0;
 }
-
 
 button[type="submit"] {
     background-color: #3498db;
@@ -116,34 +100,14 @@ button[type="submit"] {
     border-radius: 4px;
 }
 
-.alert-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-}
-
 .alert-danger {
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
 
-.alert-info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-}
-
-.alert-warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-}
-
 .rating-stars {
     display: inline-block;
-    display: flex;
-    flex-direction: row-reverse;
 }
 
 .rating-stars input[type="radio"] {
@@ -169,16 +133,15 @@ button[type="submit"] {
     padding: 5px;
     font-size: 24px;
     color: #ccc;
-    cursor: default; /* カーソルを変更する必要がないので、デフォルトに設定 */
+    cursor: default;
 }
 
 .rating-stars .filled {
-    color: #ffcc00; /* 塗りつぶされた星の色 */
+    color: #ffcc00;
 }
 
-.shop-reviews {
-    list-style-type: none;
-    padding: 0;
+.review-list {
+    list-style-type: none; /* アイテムマークを非表示にする */
 }
 
 .review-item {
@@ -186,6 +149,7 @@ button[type="submit"] {
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
 }
+
 .review-header {
     display: flex;
     align-items: center;
@@ -202,4 +166,52 @@ button[type="submit"] {
     margin: 0;
     font-size: 16px;
     line-height: 1.5;
+}
+
+/* スマートフォン用のスタイル */
+@media screen and (max-width: 480px) {
+    .shop-detail-container {
+        flex-direction: column;
+    }
+
+    .shop-detail-left,
+    .shop-detail-right {
+        flex: auto;
+        width: 100%;
+    }
+
+    .shop-detail-image img {
+        max-height: 300px;
+    }
+
+    .shop-detail-right .reservation-container {
+        margin-top: 0;
+    }
+
+    .form-container,
+    .review-item {
+        margin-bottom: 10px;
+    }
+}
+
+/* タブレット用のスタイル */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .shop-detail-container {
+        flex-direction: row;
+    }
+
+    .shop-detail-image img {
+        max-height: 350px;
+    }
+}
+
+/* PC用のスタイル */
+@media screen and (min-width: 769px) {
+    .shop-detail-container {
+        flex-direction: row;
+    }
+
+    .shop-detail-image img {
+        max-height: 400px;
+    }
 }

@@ -4,8 +4,7 @@
     <nav class="admin-nav">
         <ul>
             <li><a href="{{ route('admin.index') }}">Home</a></li>
-            <li><a href="{{ route('showAssignShopRoleForm') }}">Assign Role</a></li>
-            <li><a href="{{ route('shops.create') }}">Create Shop</a></li>
+            <li><a href="{{ route('showAssignShopRoleForm') }}">店舗代表者を任命する</a></li>
             <li><a href="{{ route('csv.csv') }}">CSVインポート</a></li>
         </ul>
     </nav>

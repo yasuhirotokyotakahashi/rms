@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <h2>店舗情報編集</h2>
         <form action="{{ route('shops.update', $shop->id) }}" method="POST">
             @csrf

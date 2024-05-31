@@ -4,6 +4,7 @@
     @auth
         <p class="welcome-message">{{ Auth::user()->name }} 様、ようこそ！</p>
     @endauth
+
     <h1>店舗一覧</h1>
 
     <div class="shop-list">
@@ -15,10 +16,13 @@
                     <div class="shop-item">
                         <div class="card">
                             <div class="card__img">
-                                <img src="{{ asset('storage/' . $shop->image_path) }}" alt="{{ $shop->name }}">
-                                <img src="{{ $shop->image_path }}" alt="{{ $shop->name }}">
-                                <!-- 下はec2の際 -->
-                                {{-- <img src="{{ asset($shop->image_path) }}" alt="{{ $shop->name }}"> --}}
+                                @if (strpos($shop->image_path, 'http') === 0)
+                                    <!-- URLの場合 -->
+                                    <img src="{{ $shop->image_path }}" alt="{{ $shop->name }}">
+                                @else
+                                    <!-- ローカルの場合 -->
+                                    <img src="{{ asset('storage/' . $shop->image_path) }}" alt="{{ $shop->name }}">
+                                @endif
                             </div>
                             <div class="card__content">
                                 <h2 class="card__content-ttl">{{ $shop->name }}</h2>

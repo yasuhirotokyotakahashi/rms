@@ -97,7 +97,7 @@ class ShopController extends Controller
             $shop->save();
         }
 
-        return redirect('/admin/shops/create')->with('success', '店舗が登録されました');
+        return view('shops/create')->with('success', '店舗が登録されました');
     }
 
     public function search(Request $request)

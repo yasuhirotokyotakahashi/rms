@@ -55,3 +55,42 @@ input[type="file"] {
     border-radius: 8px;
     margin-top: 10px;
 }
+
+/* スマートフォン向けスタイル */
+@media screen and (max-width: 480px) {
+    .edit-review-container {
+        padding: 10px;
+    }
+
+    .rating-stars {
+        justify-content: center;
+    }
+
+    .card__img img {
+        max-height: 150px;
+    }
+
+    input[type="file"] {
+        margin-bottom: 0;
+    }
+
+    #image-preview {
+        max-width: 150px;
+        max-height: 150px;
+    }
+}
+
+/* タブレット向けスタイル */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .edit-review-container {
+        max-width: 400px;
+    }
+
+    .rating-stars {
+        justify-content: flex-start;
+    }
+
+    .card__img img {
+        max-height: 250px;
+    }
+}

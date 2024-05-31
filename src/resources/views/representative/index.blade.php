@@ -4,8 +4,8 @@
     <nav class="representative-nav">
         <ul>
             <li><a href="{{ route('representative.index') }}">Home</a></li>
-            <li><a href="{{ route('shops.create') }}">Create Shop</a></li>
-            <li><a href="{{ route('representative.info') }}">店舗情報画面へ</a></li>
+            <li><a href="{{ route('shops.create') }}">新店舗を作成する</a></li>
+            <li><a href="{{ route('representative.info') }}">店舗情報の確認へ</a></li>
         </ul>
     </nav>
     @push('styles')

@@ -7,7 +7,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        <h1>全てのユーザー一覧</h1>
+        <h1>役割の与えられているユーザー一覧</h1>
 
         <table class="table">
             <thead>
@@ -97,35 +97,6 @@
             </div>
             <button type="submit" class="btn btn-primary">お知らせメールを送信</button>
         </form>
-    </div>
-
-    <div class="container">
-        <h1>全ての店舗の予約情報</h1>
-
-        @forelse ($allReservations as $reservation)
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>店舗名</th>
-                        <th>ユーザー名</th>
-                        <th>予約日</th>
-                        <th>予約時間</th>
-                        <th>ゲスト数</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $reservation->shop->name }}</td>
-                        <td>{{ $reservation->user->name }}</td>
-                        <td>{{ $reservation->date }}</td>
-                        <td>{{ $reservation->time }}</td>
-                        <td>{{ $reservation->guests }}人</td>
-                    </tr>
-                </tbody>
-            </table>
-        @empty
-            <p>予約情報はありません。</p>
-        @endforelse
     </div>
 
 

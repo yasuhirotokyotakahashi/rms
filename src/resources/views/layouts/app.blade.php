@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance Management</title>
+    <title>RMS</title>
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     @yield('css')
@@ -17,15 +17,15 @@
         <div class="header__inner">
             <div class="header-utilities">
                 <a class="header__logo" href="/">Rese</a>
-                <div class="form-group">
-                    <label for="sort">ソート:</label>
+                <form class="form-group" action="{{ route('shops.index') }}" method="GET">
+                    <label for="sort">並べ替え</label>
                     <select name="sort" id="sort">
                         <option value="default">デフォルト</option>
                         <option value="random">ランダム</option>
                         <option value="rating_desc">評価が高い順</option>
                         <option value="rating_asc">評価が低い順</option>
                     </select>
-                </div>
+                </form>
                 @if (Request::path() === '/' || Request::is('shops/search'))
                     <!-- 店舗一覧画面のパスに応じて条件分岐 -->
                     <form class="search-form" action="{{ route('shops.search') }}" method="POST">
@@ -45,46 +45,46 @@
                         <button type="submit">検索</button>
                     </form>
                 @endif
-                <nav>
-                    <ul class="header-nav">
-                        @auth <!-- ユーザーがログインしている場合 -->
-                            <li class="header-nav__item">
-                                <a class="header-nav__link" href="/">HOME</a>
-                            </li>
-                            <li class="header-nav__item">
-                                <form class="form" action="{{ route('logout') }}" method="post">
-                                    @csrf
-                                    <button class="header-nav__button">LOGOUT</button>
-                                </form>
-                            </li>
-                            <li class="header-nav__item">
-                                <a class="header-nav__link" href="/mypage">MYPAGE</a>
-                            </li>
-                            @if (auth()->check() && auth()->user()->roles()->where('role_id', 1)->exists())
-                                <li class="header-nav__item">
-                                    <a class="header-nav__link" href="/admin">管理者専用画面へ</a>
-                                </li>
-                            @endif
-                            @if (auth()->check() && auth()->user()->roles()->where('role_id', 2)->exists())
-                                <li class="header-nav__item">
-                                    <a class="header-nav__link" href="/representative">店舗代表者専用画面へ</a>
-                                </li>
-                            @endif
-                        @else
-                            <!-- ユーザーがログインしていない場合 -->
-                            <li class="header-nav__item">
-                                <a class="header-nav__link" href="/">HOME</a>
-                            </li>
-                            <li class="header-nav__item">
-                                <a class="header-nav__link" href="{{ route('register') }}">登録</a>
-                            </li>
-                            <li class="header-nav__item">
-                                <a class="header-nav__link" href="{{ route('login') }}">ログイン</a>
-                            </li>
-                        @endauth
-                    </ul>
-                </nav>
             </div>
+            <nav>
+                <ul class="header-nav">
+                    @auth <!-- ユーザーがログインしている場合 -->
+                        <li class="header-nav__item">
+                            <a class="header-nav__link" href="/">HOME</a>
+                        </li>
+                        <li class="header-nav__item">
+                            <form class="form" action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button class="header-nav__button">LOGOUT</button>
+                            </form>
+                        </li>
+                        <li class="header-nav__item">
+                            <a class="header-nav__link" href="/mypage">MYPAGE</a>
+                        </li>
+                        @if (auth()->check() && auth()->user()->roles()->where('role_id', 1)->exists())
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="/admin">管理者専用画面へ</a>
+                            </li>
+                        @endif
+                        @if (auth()->check() && auth()->user()->roles()->where('role_id', 2)->exists())
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="/representative">店舗代表者専用画面へ</a>
+                            </li>
+                        @endif
+                    @else
+                        <!-- ユーザーがログインしていない場合 -->
+                        <li class="header-nav__item">
+                            <a class="header-nav__link" href="/">HOME</a>
+                        </li>
+                        <li class="header-nav__item">
+                            <a class="header-nav__link" href="{{ route('register') }}">登録</a>
+                        </li>
+                        <li class="header-nav__item">
+                            <a class="header-nav__link" href="{{ route('login') }}">ログイン</a>
+                        </li>
+                    @endauth
+                </ul>
+            </nav>
         </div>
     </header>
 
