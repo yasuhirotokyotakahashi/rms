@@ -24,19 +24,13 @@
 
             <div class="card__img">
                 <div>
-                    @if (strpos($review->image_path, 'http') === 0)
-                        <!-- URLの場合 -->
-                        <img src="{{ $shop->image_path }}" alt="{{ $review->shop->name }}">
-                    @else
-                        <!-- ローカルの場合 -->
-                        <img src="{{ asset('storage/' . $review->image_path) }}" alt="{{ $review->shop->name }}">
-                    @endif
+                    <img src="{{ asset('storage/' . $review->image_path) }}" alt="現在の画像">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="image">画像アップロード:</label>
-                <input type="file" name="image" accept="image/*" required>
+                <input type="file" name="image" accept="image/*">
             </div>
 
 

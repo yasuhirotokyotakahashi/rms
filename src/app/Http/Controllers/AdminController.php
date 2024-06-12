@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CsvImportRequest;
 use App\Models\Reservation;
 use App\Models\Role;
 use App\Models\Shop;
@@ -100,21 +101,14 @@ class AdminController extends Controller
         return view('csv.index');
     }
 
-    public function run(Request $request)
+    public function run(CsvImportRequest $request)
     {
         $shop = new Shop();
         // CSVファイルが存在するかの確認
-        if ($request->hasFile('csvFile')) {
-            //拡張子がCSVであるかの確認
-            if ($request->csvFile->getClientOriginalExtension() !== "csv") {
-                throw new Exception('不適切な拡張子です。');
-            }
-            //ファイルの保存
-            $newCsvFileName = $request->csvFile->getClientOriginalName();
-            $request->csvFile->storeAs('public/csv', $newCsvFileName);
-        } else {
-            throw new Exception('CSVファイルの取得に失敗しました。');
-        }
+
+        //ファイルの保存
+        $newCsvFileName = $request->csvFile->getClientOriginalName();
+        $request->csvFile->storeAs('public/csv', $newCsvFileName);
         //保存したCSVファイルの取得
         $csv = Storage::disk('local')->get("public/csv/{$newCsvFileName}");
         // OS間やファイルで違う改行コードをexplode統一
@@ -147,6 +141,58 @@ class AdminController extends Controller
         if ($duplicateItem->count() > 0) {
             throw new Exception("Error:idの重複:" . $duplicateItem->shift()->id);
         }
+
+        // バリデーションを実行
+        $validator = Validator::make($shops->toArray(), [
+            '*.name' => 'required|string|max:50',
+            '*.address_id' => 'required|in:東京都,大阪府,福岡県',
+            '*.genre_id' => 'required|in:寿司,焼肉,イタリアン,居酒屋,ラーメン',
+            '*.description' => 'required|string|max:400',
+            '*.image_path' => [
+                'required',
+                'url',
+                function ($attribute, $value, $fail) {
+                    $validExtensions = ['png', 'jpeg'];
+                    $extension = pathinfo(parse_url($value, PHP_URL_PATH), PATHINFO_EXTENSION);
+                    if (!in_array(strtolower($extension), $validExtensions)) {
+                        $fail('URL末尾の画像拡張子が .png, .jpeg のいずれかである必要があります。');
+                    }
+                },
+            ],
+        ], [
+            '*.name.required' => '店舗名は必須です。',
+            '*.name.max' => '店舗名は50文字以内で入力してください。',
+            '*.address_id.required' => '所在地は必須です。',
+            '*.address_id.in' => '所在地は東京都、大阪府、または福岡県の中から指定してください',
+            '*.genre_id.required' => 'ジャンルは必須です。',
+            '*.genre_id.in' => 'ジャンルは寿司、焼肉、イタリアン、居酒屋またはラーメンの中から指定してください',
+            '*.description.required' => '説明文は必須です。',
+            '*.description.string' => '説明文は文字列で入力してください。',
+            '*.description.max' => '説明文は400文字以内で入力してください。',
+            '*.image_path.required' => '画像パスは必須です。',
+            '*.image_path.url' => '画像パスは有効なURLである必要があります。',
+        ]);
+
+        // バリデーションエラーがある場合
+        if ($validator->fails()) {
+            // エラーメッセージを取得
+            $errors = $validator->errors()->toArray();
+
+            // インデックスを追加してエラーメッセージを再構築
+            $indexedErrors = [];
+            foreach ($errors as $key => $errorMessages) {
+                list($rowIndex, $field) = explode('.', $key); // '1.name' のようなキーからインデックスとフィールド名を取得
+                foreach ($errorMessages as $errorMessage) {
+                    // エラーメッセージに行番号とフィールド名を追加
+                    $indexedErrors[] = "エラー発生行数＝ " . ($rowIndex + 1) . ", 該当カラム＝ '{$field}': $errorMessage";
+                }
+            }
+
+            // エラーメッセージをセッションに保存して入力フォームに戻る
+            return redirect()->back()->withErrors($indexedErrors)->withInput();
+        }
+
+
 
         // 都道府県名と対応する数値のマッピングを定義します
         $prefectureMap = [
@@ -202,36 +248,7 @@ class AdminController extends Controller
             return $shop;
         });
 
-        // バリデーションを実行
-        $validator = Validator::make($shops->toArray(), [
-            '*.name' => 'required|string|max:50',
-            '*.description' => 'required|string|max:400',
-            '*.image_path' => [
-                'required',
-                'url',
-                function ($attribute, $value, $fail) {
-                    $validExtensions = ['png', 'jpeg'];
-                    $extension = pathinfo(parse_url($value, PHP_URL_PATH), PATHINFO_EXTENSION);
-                    if (!in_array(strtolower($extension), $validExtensions)) {
-                        $fail('URL末尾の画像拡張子が .png, .jpeg のいずれかである必要があります。');
-                    }
-                },
-            ],
-        ], [
-            '*.name.required' => '店舗名は必須です。',
-            '*.name.max' => '店舗名は50文字以内で入力してください。',
-            '*.description.required' => '説明文は必須です。',
-            '*.description.string' => '説明文は文字列で入力してください。',
-            '*.description.max' => '説明文は400文字以内で入力してください。',
-            '*.image_path.required' => '画像パスは必須です。',
-            '*.image_path.url' => '画像パスは有効なURLである必要があります。',
-        ]);
 
-        // バリデーションエラーがある場合
-        if ($validator->fails()) {
-            // エラーメッセージをセッションに保存して入力フォームに戻る
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
 
         // バリデーションが成功した場合はデータベースへの挿入を行う
         DB::table('shops')->insert($shops->toArray());

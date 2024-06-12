@@ -1,4 +1,4 @@
-/* ナビゲーションバーのスタイル */
+
 .header {
     background-color: cornflowerblue;
     padding: 10px 0;
@@ -15,7 +15,7 @@
 .header-utilities {
     display: flex;
     align-items: center;
-    flex-grow: 1; /* ロゴとナビゲーションの間の余白を調整 */
+    flex-grow: 1; 
 }
 
 .header__logo {
@@ -33,23 +33,29 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .header-nav__item {
-    margin-right: 20px;
+    margin-bottom: 5px; 
 }
 
-.header-nav__link {
+.header-nav__link, .header-nav__button {
+    display: block;
+    padding: 5px 10px;
     color: #fff;
     text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.header-nav__button {
-    border: none;
-    background: transparent;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
+.header-nav__link:hover, .header-nav__button:hover {
+    background-color: #005555;
 }
 
 .search-form .form-group {
@@ -65,6 +71,8 @@
 @media screen and (max-width: 480px) {
     .header__inner {
         padding: 20px 10px;
+        flex-direction: column; /* 縦方向に配置 */
+        align-items: center;
     }
 
     .header__logo {
@@ -86,7 +94,12 @@
     }
 
     .header-nav__item {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+        margin-right: 0;
+    }
+
+    .header-nav__link, .header-nav__button {
+        padding: 8px 12px; 
     }
 }
 
@@ -98,5 +111,9 @@
 
     .header-nav__button {
         font-size: 14px;
+    }
+
+    .header-nav__link, .header-nav__button {
+        padding: 6px 10px;
     }
 }

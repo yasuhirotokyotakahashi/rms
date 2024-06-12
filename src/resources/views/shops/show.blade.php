@@ -51,7 +51,7 @@
                             <li class="review-item">
                                 <div class="review-header">
                                     <div class="rating-stars">
-                                        @for ($i = 5; $i >= 1; $i--)
+                                        @for ($i = 1; $i <= 5; $i++)
                                             <span class="star {{ $i <= $review->rating ? 'filled' : '' }}">&#9733;</span>
                                         @endfor
                                     </div>

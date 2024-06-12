@@ -7,11 +7,12 @@
 
 .card__img img {
     width: 100%;
-    max-height: 200px;
+    height: 200px; /* 画像の高さを統一 */
+    object-fit: cover; /* 画像を枠に収める */
 }
 
 .card__content {
-    padding: 15px 25px;
+    padding: 15px 20px;
 }
 
 .card__content-ttl {
@@ -23,7 +24,7 @@
 .card__content-tag {
     padding: 5px 10px;
     background: #008888;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: inline-block;
     color: #fff;
     font-size: 14px;
@@ -36,7 +37,7 @@
 
 .card__content-description {
     font-size: 14px;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .card__content-link {
@@ -72,43 +73,68 @@
     /* ハートボタンと詳しく見るリンクの間にマージンを追加 */
 }
 
+/* 左右に余白を追加するためのコンテナクラス */
+.container {
+    padding: 0 15px; /* 左右のパディングを追加 */
+}
+
 /* デスクトップ向けスタイル */
 @media (min-width: 769px) {
     .shop-row {
         display: flex;
         flex-wrap: wrap;
-        margin: 0 -20px;
+        margin: -10px;
     }
 
     .shop-item {
-        width: 300px;
-        margin: 0 20px 20px 0;
+        width: calc(25% - 20px); /* カードの幅を調整 */
+        margin: 10px; /* カードの周囲に均等なマージンを追加 */
         box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px; /* カードの角を少し丸める */
+        overflow: hidden; /* カードの中身がはみ出ないように */
     }
 
     .card {
-        width: 300px;
-        margin: 0 20px 20px 0;
+        width: 100%;
     }
 }
 
 /* タブレット向けスタイル */
 @media (max-width: 768px) {
+    .shop-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -5px; /* 行の左右にマージンを追加 */
+    }
+
     .shop-item {
-        width: 48%;
-        margin: 0 1% 20px 1%;
+        width: calc(50% - 10px); /* カードの幅を調整 */
+        margin: 5px; /* カードの周囲に均等なマージンを追加 */
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px; /* カードの角を少し丸める */
+        overflow: hidden; /* カードの中身がはみ出ないように */
     }
 
     .card {
-        width: 100%;
-        margin: 0 0 20px 0;
+        width: 100%; /* カードの幅を100%に設定 */
     }
 }
 
 /* スマートフォン向けスタイル */
 @media (max-width: 480px) {
+    .shop-row {
+        margin: -10px; /* 行の左右にマージンを追加 */
+    }
+
     .shop-item {
-        width: 100%;
-        margin: 0 0 20px 0;
+        width: calc(100% - 20px); /* カードの幅を調整 */
+        margin: 10px; /* カードの周囲に均等なマージンを追加 */
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px; /* カードの角を少し丸める */
+        overflow: hidden; /* カードの中身がはみ出ないように */
+    }
+
+    .card {
+        width: 100%; /* カードの幅を100%に設定 */
     }
 }

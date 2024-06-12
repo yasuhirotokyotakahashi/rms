@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Review;
 use App\Models\Shop;
+use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
@@ -66,7 +67,7 @@ class ReviewController extends Controller
         return view('reviews.edit', compact('review'));
     }
 
-    public function update(ReviewRequest $request, $review_id)
+    public function update(Request $request, $review_id)
     {
         $review = Review::findOrFail($review_id);
         if ($request->hasFile('image')) {
@@ -75,12 +76,14 @@ class ReviewController extends Controller
             $imagePath = $image->store(
                 'images',
                 'public'
-            ); // ファイルをstorage/app/public/imagesに保存し、publicディスクを使用
-            $review->rating = $request->input('rating');
-            $review->comment = $request->input('comment');
-            $review->image_path = $imagePath; // 保存したファイルパスをimage_pathに設定
-            $review->save();
+            );
+            $review->image_path = $imagePath; // 保存したファイルパスをimage_pathに設定; // ファイルをstorage/app/public/imagesに保存し、publicディスクを使用
         }
+        $review->rating = $request->input('rating');
+        $review->comment = $request->input('comment');
+
+        $review->save();
+
 
         return redirect()->route('shops.index', ['review_id' => $review->id])->with('success', 'レビューが更新されました');
     }

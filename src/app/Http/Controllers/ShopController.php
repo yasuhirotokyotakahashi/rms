@@ -13,17 +13,22 @@ class ShopController extends Controller
 
         $sort = $request->input('sort', 'default');
         // 評価がある店舗と評価がない店舗をそれぞれ取得
-        $ratedShops = Shop::withCount('reviews')->whereHas('reviews');
-        $unratedShops = Shop::withCount('reviews')->whereDoesntHave('reviews');
+        $ratedShops = Shop::withCount('reviews')
+            ->withAvg('reviews', 'rating')  // 評価の平均値を計算
+            ->whereHas('reviews');
+
+        $unratedShops = Shop::withCount('reviews')
+            ->withAvg('reviews', 'rating')  // 評価の平均値もゼロに設定されますが、問題ありません
+            ->whereDoesntHave('reviews');
 
         // 評価がある店舗を評価の高い順に、評価がない店舗を後ろに配置して取得
         if (
             $sort === 'rating_desc'
         ) {
-            $ratedShops = $ratedShops->orderByDesc('reviews_count');
+            $ratedShops = $ratedShops->orderByDesc('reviews_avg_rating');
             $unratedShops = $unratedShops->orderBy('id'); // ここを適切な並び替えに変更してください
         } elseif ($sort === 'rating_asc') {
-            $ratedShops = $ratedShops->orderBy('reviews_count');
+            $ratedShops = $ratedShops->orderBy('reviews_avg_rating');
             $unratedShops = $unratedShops->orderBy('id'); // ここを適切な並び替えに変更してください
         }
 
