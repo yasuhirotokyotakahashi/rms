@@ -103,157 +103,114 @@ class AdminController extends Controller
 
     public function run(CsvImportRequest $request)
     {
-        $shop = new Shop();
-        // CSVファイルが存在するかの確認
-
-        //ファイルの保存
-        $newCsvFileName = $request->csvFile->getClientOriginalName();
-        $request->csvFile->storeAs('public/csv', $newCsvFileName);
-        //保存したCSVファイルの取得
-        $csv = Storage::disk('local')->get("public/csv/{$newCsvFileName}");
-        // OS間やファイルで違う改行コードをexplode統一
-        $csv = str_replace(array("\r\n", "\r"), "\n", $csv);
-        // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
-        $uploadedData = collect(explode("\n", $csv));
-
-        // テーブルとCSVファイルのヘッダーの比較
-        $header = collect($shop->csvHeader());
-        $uploadedHeader = collect(explode(",", $uploadedData->shift()));
-        if ($header->count() !== $uploadedHeader->count()) {
-            throw new Exception('Error:ヘッダーが一致しませんわよ');
-        }
-
-        // 連想配列のコレクションを作成
-        //combine 一方の配列をキー、もう一方を値として一つの配列生成。haederをキーとして、一つ一つの$oneRecordと組み合わせて、連想配列のコレクション作成
         try {
-            $shops = $uploadedData->map(fn ($oneRecord) => $header->combine(collect(explode(",", $oneRecord))));
-        } catch (Exception $e) {
-            throw new Exception('Error:ヘッダーが一致しません');
-        }
+            // CSVの処理
+            $shops = $request->processCsv();
 
-        // アップロードしたCSVファイル内での重複チェック
-        if ($shops->duplicates()->count() > 0) {
-            throw new Exception("Error:重複する行があります:");
-        }
+            // アップロードしたCSVファイル内での重複チェック
+            if ($shops->duplicates()->count() > 0) {
+                throw new Exception("Error: 重複する行があります。");
+            }
 
-        // 既存データとの重複チェック.pluckでDBに挿入したい$itemsのidのみ抽出
-        $duplicateItem = DB::table('shops')->whereIn('id', $shops->pluck('id'));
-        if ($duplicateItem->count() > 0) {
-            throw new Exception("Error:idの重複:" . $duplicateItem->shift()->id);
-        }
+            // 既存データとの重複チェック
+            $duplicateItem = DB::table('shops')->whereIn('id', $shops->pluck('id'))->first();
+            if ($duplicateItem) {
+                throw new Exception("Error: idの重複: " . $duplicateItem->id);
+            }
 
-        // バリデーションを実行
-        $validator = Validator::make($shops->toArray(), [
-            '*.name' => 'required|string|max:50',
-            '*.address_id' => 'required|in:東京都,大阪府,福岡県',
-            '*.genre_id' => 'required|in:寿司,焼肉,イタリアン,居酒屋,ラーメン',
-            '*.description' => 'required|string|max:400',
-            '*.image_path' => [
-                'required',
-                'url',
-                function ($attribute, $value, $fail) {
-                    $validExtensions = ['png', 'jpeg'];
-                    $extension = pathinfo(parse_url($value, PHP_URL_PATH), PATHINFO_EXTENSION);
-                    if (!in_array(strtolower($extension), $validExtensions)) {
-                        $fail('URL末尾の画像拡張子が .png, .jpeg のいずれかである必要があります。');
+            // バリデーションを実行
+            $validator = Validator::make($shops->toArray(), [
+                '*.name' => 'required|string|max:50',
+                '*.address_id' => 'required|in:東京都,大阪府,福岡県',
+                '*.genre_id' => 'required|in:寿司,焼肉,イタリアン,居酒屋,ラーメン',
+                '*.description' => 'required|string|max:400',
+                '*.image_path' => [
+                    'required',
+                    'url',
+                    function ($attribute, $value, $fail) {
+                        $validExtensions = ['png', 'jpeg'];
+                        $extension = pathinfo(parse_url($value, PHP_URL_PATH), PATHINFO_EXTENSION);
+                        if (!in_array(strtolower($extension), $validExtensions)) {
+                            $fail('URL末尾の画像拡張子が .png, .jpeg のいずれかである必要があります。');
+                        }
+                    },
+                ],
+            ], [
+                '*.name.required' => '店舗名は必須です。',
+                '*.name.max' => '店舗名は50文字以内で入力してください。',
+                '*.address_id.required' => '所在地は必須です。',
+                '*.address_id.in' => '所在地は東京都、大阪府、または福岡県の中から指定してください',
+                '*.genre_id.required' => 'ジャンルは必須です。',
+                '*.genre_id.in' => 'ジャンルは寿司、焼肉、イタリアン、居酒屋またはラーメンの中から指定してください',
+                '*.description.required' => '説明文は必須です。',
+                '*.description.string' => '説明文は文字列で入力してください。',
+                '*.description.max' => '説明文は400文字以内で入力してください。',
+                '*.image_path.required' => '画像パスは必須です。',
+                '*.image_path.url' => '画像パスは有効なURLである必要があります。',
+            ]);
+
+            // バリデーションエラーがある場合
+            if ($validator->fails()) {
+                // エラーメッセージを取得
+                $errors = $validator->errors()->toArray();
+
+                // インデックスを追加してエラーメッセージを再構築
+                $indexedErrors = [];
+                foreach ($errors as $key => $errorMessages) {
+                    list($rowIndex, $field) = explode('.', $key); // '1.name' のようなキーからインデックスとフィールド名を取得
+                    foreach ($errorMessages as $errorMessage) {
+                        // エラーメッセージに行番号とフィールド名を追加
+                        $indexedErrors[] =  ($rowIndex + 1) . "行目のデータでエラー箇所が見つかりました。" . "$errorMessage";
                     }
-                },
-            ],
-        ], [
-            '*.name.required' => '店舗名は必須です。',
-            '*.name.max' => '店舗名は50文字以内で入力してください。',
-            '*.address_id.required' => '所在地は必須です。',
-            '*.address_id.in' => '所在地は東京都、大阪府、または福岡県の中から指定してください',
-            '*.genre_id.required' => 'ジャンルは必須です。',
-            '*.genre_id.in' => 'ジャンルは寿司、焼肉、イタリアン、居酒屋またはラーメンの中から指定してください',
-            '*.description.required' => '説明文は必須です。',
-            '*.description.string' => '説明文は文字列で入力してください。',
-            '*.description.max' => '説明文は400文字以内で入力してください。',
-            '*.image_path.required' => '画像パスは必須です。',
-            '*.image_path.url' => '画像パスは有効なURLである必要があります。',
-        ]);
-
-        // バリデーションエラーがある場合
-        if ($validator->fails()) {
-            // エラーメッセージを取得
-            $errors = $validator->errors()->toArray();
-
-            // インデックスを追加してエラーメッセージを再構築
-            $indexedErrors = [];
-            foreach ($errors as $key => $errorMessages) {
-                list($rowIndex, $field) = explode('.', $key); // '1.name' のようなキーからインデックスとフィールド名を取得
-                foreach ($errorMessages as $errorMessage) {
-                    // エラーメッセージに行番号とフィールド名を追加
-                    $indexedErrors[] = "エラー発生行数＝ " . ($rowIndex + 1) . ", 該当カラム＝ '{$field}': $errorMessage";
                 }
+
+                // エラーメッセージをセッションに保存して入力フォームに戻る
+                return redirect()->back()->withErrors($indexedErrors)->withInput();
             }
 
+            // 都道府県名と対応する数値のマッピング
+            $prefectureMap = [
+                '東京都' => 1,
+                '大阪府' => 2,
+                '福岡県' => 3,
+            ];
+
+            // ジャンル名と対応する整数値のマッピング
+            $genreMap = [
+                '寿司' => 1,
+                '焼肉' => 2,
+                '居酒屋' => 3,
+                'イタリアン' => 4,
+                'ラーメン' => 5,
+            ];
+
+            // $shops コレクションを変換
+            $shops = $shops->map(function ($shop) use ($prefectureMap, $genreMap) {
+                // 都道府県名を数値IDに変換
+                $prefectureName = $shop['address_id'];
+                if (!array_key_exists($prefectureName, $prefectureMap)) {
+                    throw new \Exception('無効な都道府県名です。');
+                }
+                $shop['address_id'] = $prefectureMap[$prefectureName];
+
+                // ジャンル名を数値IDに変換
+                $genreName = $shop['genre_id'];
+                if (!array_key_exists($genreName, $genreMap)) {
+                    throw new \Exception('無効なジャンルです。');
+                }
+                $shop['genre_id'] = $genreMap[$genreName];
+
+                return $shop;
+            });
+
+            // データベースに挿入
+            DB::table('shops')->insert($shops->toArray());
+
+            // 成功時のリダイレクト
+            return redirect()->route('csv.csv')->with('success', '店舗が登録されました');
+        } catch (Exception $e) {
             // エラーメッセージをセッションに保存して入力フォームに戻る
-            return redirect()->back()->withErrors($indexedErrors)->withInput();
+            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
         }
-
-
-
-        // 都道府県名と対応する数値のマッピングを定義します
-        $prefectureMap = [
-            '東京都' => 1,
-            '大阪府' => 2,
-            '福岡県' => 3,
-            // 他の都道府県に対するマッピングも同様に定義します
-        ];
-
-        // $shops コレクションを変換します
-        $shops = $shops->map(function ($shop) use ($prefectureMap) {
-            // 都道府県名がマッピングに含まれているか確認します
-            $prefectureName = $shop['address_id'];
-            if (!array_key_exists($prefectureName, $prefectureMap)) {
-                // 都道府県名がマッピングに含まれていない場合はエラーメッセージを返します
-                throw new \Exception('無効な都道府県名です。');
-            }
-
-            // マッピングされた都道府県IDを取得します
-            $prefectureId = $prefectureMap[$prefectureName];
-
-            // 新しいキー 'address_id' を追加し、数値に変換した都道府県IDを代入します
-            $shop['address_id'] = $prefectureId;
-
-            // 変換したレコードを返します
-            return $shop;
-        });
-
-        // ジャンル名と対応する整数値のマッピングを定義します
-        $genreMap = [
-            '寿司' => 1,
-            '焼肉' => 2,
-            '居酒屋' => 3,
-            'イタリアン' => 4,
-            'ラーメン' => 5,
-            // 他のジャンルに対するマッピングも同様に定義します
-        ];
-
-        // $shops コレクションを変換します
-        $shops = $shops->map(function ($shop) use ($genreMap) {
-            // ジャンル名を整数値に変換します
-            $genreName = $shop['genre_id']; // 仮にジャンル名のキーが 'genre_id' とする
-            if (!array_key_exists($genreName, $genreMap)) {
-                // 都道府県名がマッピングに含まれていない場合はエラーメッセージを返します
-                throw new \Exception('無効なジャンルです。');
-            }
-            $genreId = $genreMap[$genreName];
-
-            // 新しいキー 'genre_id' を追加し、整数値に変換したジャンルIDを代入します
-            $shop['genre_id'] = $genreId;
-
-            // 変換したレコードを返します
-            return $shop;
-        });
-
-
-
-        // バリデーションが成功した場合はデータベースへの挿入を行う
-        DB::table('shops')->insert($shops->toArray());
-
-        // 成功時のリダイレクト
-        return redirect()->route('csv.csv')->with('success', '店舗が登録されました');
     }
 }
