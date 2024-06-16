@@ -39,7 +39,7 @@
 
 .card__img img {
     width: 100%;
-    max-height: 200px;
+    max-width: 100%; /* コンテナを超えないように設定 */
     border-radius: 8px;
 }
 
@@ -91,6 +91,8 @@ input[type="file"] {
     }
 
     .card__img img {
+        width: auto; /* 幅を自動で調整 */
+        max-width: 100%; /* コンテナを超えないように設定 */
         max-height: 250px;
     }
 }
